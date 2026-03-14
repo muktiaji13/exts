@@ -1,0 +1,95 @@
+{
+  "name": "NodPy",
+  "scopeName": "source.nodpy",
+  "fileTypes": ["nodpy"],
+  "patterns": [
+    { "include": "#python-block" },
+    { "include": "#py-import" },
+    { "include": "#py-tag" },
+    { "include": "#dollar-bridge" },
+    { "include": "#js-keywords" },
+    { "include": "#js-strings" },
+    { "include": "#js-comments" },
+    { "include": "#js-numbers" }
+  ],
+  "repository": {
+    "python-block": {
+      "name": "meta.embedded.block.python",
+      "begin": "\\b(python)\\s*(\\{)",
+      "beginCaptures": {
+        "1": { "name": "keyword.control.nodpy.python" },
+        "2": { "name": "punctuation.definition.block.begin.nodpy" }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.block.end.nodpy" }
+      },
+      "contentName": "source.python",
+      "patterns": [{ "include": "source.python" }]
+    },
+    "py-import": {
+      "match": "\\b(import)\\s+(py)\\s+([\"'][^\"']+[\"'])(?:\\s+(as)\\s+(\\w+))?",
+      "captures": {
+        "1": { "name": "keyword.control.import.nodpy" },
+        "2": { "name": "keyword.other.nodpy.py" },
+        "3": { "name": "string.quoted.nodpy.module" },
+        "4": { "name": "keyword.control.as.nodpy" },
+        "5": { "name": "variable.other.nodpy" }
+      }
+    },
+    "py-tag": {
+      "match": "\\b(py)`([^`]*)`",
+      "captures": {
+        "1": { "name": "keyword.other.nodpy.pytag" },
+        "2": { "name": "source.python" }
+      }
+    },
+    "dollar-bridge": {
+      "match": "^\\s*(\\$)(\\w+)\\s*;?$",
+      "captures": {
+        "1": { "name": "keyword.operator.nodpy.bridge" },
+        "2": { "name": "variable.other.nodpy.bridge" }
+      }
+    },
+    "js-keywords": {
+      "match": "\\b(const|let|var|async|await|import|export|from|return|if|else|for|while|function|class|new|this|typeof|instanceof|of|in|break|continue|try|catch|finally|throw|delete|void)\\b",
+      "name": "keyword.control.js"
+    },
+    "js-strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.js",
+          "begin": "\"", "end": "\"",
+          "patterns": [{ "name": "constant.character.escape.js", "match": "\\\\." }]
+        },
+        {
+          "name": "string.quoted.single.js",
+          "begin": "'", "end": "'",
+          "patterns": [{ "name": "constant.character.escape.js", "match": "\\\\." }]
+        },
+        {
+          "name": "string.template.js",
+          "begin": "`", "end": "`",
+          "patterns": [
+            { "name": "constant.character.escape.js", "match": "\\\\." },
+            {
+              "name": "meta.template.expression.js",
+              "begin": "\\$\\{", "end": "\\}",
+              "patterns": [{ "include": "$self" }]
+            }
+          ]
+        }
+      ]
+    },
+    "js-comments": {
+      "patterns": [
+        { "name": "comment.line.double-slash.js", "match": "//.*$" },
+        { "name": "comment.block.js", "begin": "/\\*", "end": "\\*/" }
+      ]
+    },
+    "js-numbers": {
+      "match": "\\b(0x[0-9a-fA-F]+|0b[01]+|0o[0-7]+|\\d+\\.?\\d*([eE][+-]?\\d+)?)\\b",
+      "name": "constant.numeric.js"
+    }
+  }
+}

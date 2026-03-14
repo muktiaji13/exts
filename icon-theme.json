@@ -1,0 +1,14 @@
+{
+  "iconDefinitions": {
+    "_nodpy": {
+      "iconPath": "./icons/nodpy-file.svg"
+    }
+  },
+  "fileExtensions": {
+    "nodpy": "_nodpy"
+  },
+  "fileNames": {},
+  "languageIds": {
+    "nodpy": "_nodpy"
+  }
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <!-- Background -->
+  <rect width="16" height="16" rx="3" fill="#1a1f2e"/>
+  <!-- Green left stripe -->
+  <rect x="0" y="0" width="7" height="16" rx="3" fill="#1e3a1e"/>
+  <rect x="4" y="0" width="3" height="16" fill="#1e3a1e"/>
+  <!-- N letter — green -->
+  <path d="M2 4 L2 12 L3.2 12 L3.2 8 L5.8 12 L7 12 L7 4 L5.8 4 L5.8 8 L3.2 4 Z" fill="#5bc25b"/>
+  <!-- P letter — blue -->
+  <path d="M8.5 4 L8.5 12 L9.7 12 L9.7 9 L12 9 Q14 9 14 6.5 Q14 4 12 4 Z M9.7 5.2 L11.5 5.2 Q12.8 5.2 12.8 6.5 Q12.8 7.8 11.5 7.8 L9.7 7.8 Z" fill="#5b9cd4"/>
+</svg>
