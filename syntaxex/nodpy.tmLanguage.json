@@ -3,16 +3,28 @@
   "scopeName": "source.nodpy",
   "fileTypes": ["nodpy"],
   "patterns": [
+    { "include": "#comments" },
     { "include": "#python-block" },
     { "include": "#py-import" },
     { "include": "#py-tag" },
     { "include": "#dollar-bridge" },
     { "include": "#js-keywords" },
+    { "include": "#js-operators" },
     { "include": "#js-strings" },
-    { "include": "#js-comments" },
-    { "include": "#js-numbers" }
+    { "include": "#js-numbers" },
+    { "include": "#definitions" },
+    { "include": "#properties" },
+    { "include": "#builtins" },
+    { "include": "#regex" }
   ],
   "repository": {
+    "comments": {
+      "patterns": [
+        { "name": "comment.line.double-slash.nodpy", "match": "//.*$" },
+        { "name": "comment.block.nodpy", "begin": "/\\*", "end": "\\*/" },
+        { "name": "comment.line.number-sign.nodpy", "match": "#.*$" }
+      ]
+    },
     "python-block": {
       "name": "meta.embedded.block.python",
       "begin": "\\b(python)\\s*(\\{)",
@@ -31,7 +43,7 @@
       "match": "\\b(import)\\s+(py)\\s+([\"'][^\"']+[\"'])(?:\\s+(as)\\s+(\\w+))?",
       "captures": {
         "1": { "name": "keyword.control.import.nodpy" },
-        "2": { "name": "keyword.other.nodpy.py" },
+        "2": { "name": "storage.type.nodpy.py" },
         "3": { "name": "string.quoted.nodpy.module" },
         "4": { "name": "keyword.control.as.nodpy" },
         "5": { "name": "variable.other.nodpy" }
@@ -52,44 +64,126 @@
       }
     },
     "js-keywords": {
-      "match": "\\b(const|let|var|async|await|import|export|from|return|if|else|for|while|function|class|new|this|typeof|instanceof|of|in|break|continue|try|catch|finally|throw|delete|void)\\b",
-      "name": "keyword.control.js"
+      "patterns": [
+        {
+          "name": "keyword.control.nodpy",
+          "match": "\\b(await|async|import|export|from|return|if|else|for|while|switch|case|break|continue|try|catch|finally|throw|class|extends|new|this|super|function|const|let|var|typeof|instanceof|in|of)\\b"
+        },
+        {
+          "name": "storage.type.class.nodpy",
+          "match": "\\b(class)\\s+(\\w+)\\b",
+          "captures": {
+            "1": { "name": "keyword.declaration.class.nodpy" },
+            "2": { "name": "entity.name.type.class.nodpy" }
+          }
+        }
+      ]
+    },
+    "definitions": {
+      "patterns": [
+        {
+          "name": "meta.function.nodpy",
+          "begin": "\\b(function|def)\\s+(\\w+)\\s*(\\()",
+          "beginCaptures": {
+            "1": { "name": "keyword.declaration.function.nodpy" },
+            "2": { "name": "entity.name.function.nodpy" },
+            "3": { "name": "punctuation.definition.parameters.begin.nodpy" }
+          },
+          "end": "\\)",
+          "endCaptures": { "0": { "name": "punctuation.definition.parameters.end.nodpy" } },
+          "patterns": [
+            {
+              "name": "variable.parameter.function.nodpy",
+              "match": "\\b[_A-Za-z][_A-Za-z0-9]*\\b"
+            }
+          ]
+        }
+      ]
+    },
+    "properties": {
+      "patterns": [
+        {
+          "name": "variable.other.property.nodpy",
+          "match": "(?<=\\.)\\b[_A-Za-z][_A-Za-z0-9]*\\b"
+        },
+        {
+          "name": "meta.object.literal.property.nodpy",
+          "begin": "\\{",
+          "end": "\\}",
+          "patterns": [
+            {
+              "name": "entity.name.property.nodpy",
+              "match": "\\b[_A-Za-z][_A-Za-z0-9]*\\b(?=\\s*:)"
+            }
+          ]
+        }
+      ]
     },
     "js-strings": {
       "patterns": [
         {
-          "name": "string.quoted.double.js",
-          "begin": "\"", "end": "\"",
-          "patterns": [{ "name": "constant.character.escape.js", "match": "\\\\." }]
+          "name": "string.quoted.double.nodpy",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [{ "name": "constant.character.escape.nodpy", "match": "\\\\." }]
         },
         {
-          "name": "string.quoted.single.js",
-          "begin": "'", "end": "'",
-          "patterns": [{ "name": "constant.character.escape.js", "match": "\\\\." }]
+          "name": "string.quoted.single.nodpy",
+          "begin": "'",
+          "end": "'",
+          "patterns": [{ "name": "constant.character.escape.nodpy", "match": "\\\\." }]
         },
         {
-          "name": "string.template.js",
-          "begin": "`", "end": "`",
+          "name": "string.template.nodpy",
+          "begin": "`",
+          "end": "`",
           "patterns": [
-            { "name": "constant.character.escape.js", "match": "\\\\." },
+            { "name": "constant.character.escape.nodpy", "match": "\\\\." },
             {
-              "name": "meta.template.expression.js",
-              "begin": "\\$\\{", "end": "\\}",
+              "name": "meta.interpolation.nodpy",
+              "begin": "\\$\\{",
+              "end": "\\}",
               "patterns": [{ "include": "$self" }]
             }
           ]
         }
       ]
     },
-    "js-comments": {
+    "js-numbers": {
+      "name": "constant.numeric.nodpy",
+      "match": "\\b(0x[0-9a-fA-F]+|0b[01]+|0o[0-7]+|\\d+\\.?\\d*([eE][+-]?\\d+)?)\\b"
+    },
+    "js-operators": {
       "patterns": [
-        { "name": "comment.line.double-slash.js", "match": "//.*$" },
-        { "name": "comment.block.js", "begin": "/\\*", "end": "\\*/" }
+        { "name": "keyword.operator.assignment.nodpy", "match": "(?<![<>!=])=(?!=)" },
+        { "name": "keyword.operator.arithmetic.nodpy", "match": "[+\\-*/%]" },
+        { "name": "keyword.operator.logical.nodpy", "match": "(&&|\\|\\||!|==|!=|===|!==|<=|>=|<|>)" },
+        { "name": "punctuation.separator.nodpy", "match": "[,;:.]" }
       ]
     },
-    "js-numbers": {
-      "match": "\\b(0x[0-9a-fA-F]+|0b[01]+|0o[0-7]+|\\d+\\.?\\d*([eE][+-]?\\d+)?)\\b",
-      "name": "constant.numeric.js"
+    "builtins": {
+      "patterns": [
+        {
+          "name": "support.function.builtin.nodpy",
+          "match": "\\b(console|log|print|require|resolve|setTimeout|setInterval|clearTimeout|clearInterval|Promise|Map|Set|JSON|parseInt|parseFloat|len)\\b"
+        },
+        {
+          "name": "constant.language.boolean.nodpy",
+          "match": "\\b(true|false|null|undefined|None)\\b"
+        }
+      ]
+    },
+    "regex": {
+      "patterns": [
+        {
+          "name": "string.regexp.nodpy",
+          "begin": "/",
+          "end": "/[gimsuy]*",
+          "beginCaptures": { "0": { "name": "punctuation.definition.regex.begin.nodpy" } },
+          "endCaptures": { "0": { "name": "punctuation.definition.regex.end.nodpy" } }
+        }
+      ]
     }
-  }
+  },
+  "scope": "source.nodpy"
 }
