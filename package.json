@@ -1,23 +1,36 @@
 {
   "name": "nodpy",
   "displayName": "NodPy Language Support",
-  "description": "Syntax highlighting and file icons for .nodpy files (NodPy hybrid Node.js × Python)",
+  "description": "Syntax highlighting and file icons for .nodpy files (NodPy hybrid Node.js \u00d7 Python)",
   "version": "0.2.0",
-  "publisher": "nodpy",
-  "engines": { "vscode": "^1.74.0" },
-  "categories": ["Programming Languages", "Themes"],
+  "publisher": "muktiaji13",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Themes"
+  ],
   "icon": "icons/nodpy-logo.png",
-  "repository": { "type": "git", "url": "https://github.com/muktiaji13/nodpy" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muktiaji13/exts"
+  },
   "contributes": {
     "languages": [
       {
         "id": "nodpy",
-        "aliases": ["NodPy", "nodpy"],
-        "extensions": [".nodpy"],
+        "aliases": [
+          "NodPy",
+          "nodpy"
+        ],
+        "extensions": [
+          ".nodpy"
+        ],
         "configuration": "./language-configuration.json",
         "icon": {
           "light": "./icons/nodpy-file.svg",
-          "dark":  "./icons/nodpy-file.svg"
+          "dark": "./icons/nodpy-file.svg"
         }
       }
     ],
