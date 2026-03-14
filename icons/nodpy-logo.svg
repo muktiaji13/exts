@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background: rounded square, dark charcoal -->
+  <rect width="100" height="100" rx="18" fill="#1a1f2e"/>
+
+  <!-- Green accent bar (Node side) -->
+  <rect x="0" y="0" width="50" height="100" rx="18" fill="#1e2d1e"/>
+  <rect x="36" y="0" width="14" height="100" fill="#1e2d1e"/>
+
+  <!-- Stylized N (Node) — left half, green -->
+  <path d="M14 28 L14 72 L20 72 L20 50 L34 72 L40 72 L40 28 L34 28 L34 50 L20 28 Z" fill="#4CAF50"/>
+
+  <!-- Stylized P (Python) — right half, blue -->
+  <path d="M52 28 L52 72 L58 72 L58 54 L70 54 Q80 54 80 41 Q80 28 70 28 Z M58 34 L68 34 Q74 34 74 41 Q74 48 68 48 L58 48 Z" fill="#4B8ED4"/>
+
+  <!-- Small dot connector between N and P -->
+  <circle cx="50" cy="50" r="3" fill="#888"/>
+</svg>
